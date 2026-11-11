@@ -1,0 +1,200 @@
+digraph EBNF {
+    rankdir=LR;
+    splines=line;
+
+    // =====================
+    // NEWLINE
+    NEWLINE [shape=plaintext, style="", label="NEWLINE"];
+    terminal [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“\\n“"];
+    NEWLINE->terminal;
+
+    // =====================
+    // R_PAR_DEL
+    R_PAR_DEL [shape=plaintext, style="", label="R_PAR_DEL"];
+    terminal0 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“)“"];
+    R_PAR_DEL->terminal0;
+
+    // =====================
+    // L_PAR_DEL
+    L_PAR_DEL [shape=plaintext, style="", label="L_PAR_DEL"];
+    terminal1 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“(“"];
+    L_PAR_DEL->terminal1;
+
+    // =====================
+    // R_SQ_BRACE_DEL
+    R_SQ_BRACE_DEL [shape=plaintext, style="", label="R_SQ_BRACE_DEL"];
+    terminal2 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“]“"];
+    R_SQ_BRACE_DEL->terminal2;
+
+    // =====================
+    // L_SQ_BRACE_DEL
+    L_SQ_BRACE_DEL [shape=plaintext, style="", label="L_SQ_BRACE_DEL"];
+    terminal3 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“[“"];
+    L_SQ_BRACE_DEL->terminal3;
+
+    // =====================
+    // PLUS_OP
+    PLUS_OP [shape=plaintext, style="", label="PLUS_OP"];
+    terminal4 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“+“"];
+    PLUS_OP->terminal4;
+
+    // =====================
+    // STAR_OP
+    STAR_OP [shape=plaintext, style="", label="STAR_OP"];
+    terminal5 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“*“"];
+    STAR_OP->terminal5;
+
+    // =====================
+    // DIS_OP
+    DIS_OP [shape=plaintext, style="", label="DIS_OP"];
+    terminal6 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“|“"];
+    DIS_OP->terminal6;
+
+    // =====================
+    // RULE_OP
+    RULE_OP [shape=plaintext, style="", label="RULE_OP"];
+    terminal7 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“::=“"];
+    RULE_OP->terminal7;
+
+    // =====================
+    // IDENTIFIER
+    IDENTIFIER [shape=plaintext, style="", label="IDENTIFIER"];
+    terminal8 [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="“\\<[a-zA-Z_][a-zA-Z0-9_]*\\>“"];
+    IDENTIFIER->terminal8;
+
+    // =====================
+    // grouped_sequence
+    grouped_sequence [shape=plaintext, style="", label="grouped_sequence"];
+    L_PAR_DEL0 [shape=box, style="filled", fillcolor="#9ffcab", label="L_PAR_DEL"];
+    expression [shape=box, style="filled", fillcolor="#9ffcab", label="expression"];
+    R_PAR_DEL0 [shape=box, style="filled", fillcolor="#9ffcab", label="R_PAR_DEL"];
+    L_PAR_DEL0->expression;
+    expression->R_PAR_DEL0;
+    grouped_sequence->L_PAR_DEL0;
+
+    // =====================
+    // optional_sequence
+    optional_sequence [shape=plaintext, style="", label="optional_sequence"];
+    L_SQ_BRACE_DEL0 [shape=box, style="filled", fillcolor="#9ffcab", label="L_SQ_BRACE_DEL"];
+    expression0 [shape=box, style="filled", fillcolor="#9ffcab", label="expression"];
+    R_SQ_BRACE_DEL0 [shape=box, style="filled", fillcolor="#9ffcab", label="R_SQ_BRACE_DEL"];
+    L_SQ_BRACE_DEL0->expression0;
+    expression0->R_SQ_BRACE_DEL0;
+    optional_sequence->L_SQ_BRACE_DEL0;
+
+    // =====================
+    // primary
+    primary [shape=plaintext, style="", label="primary"];
+    optional_sequence0 [shape=box, style="filled", fillcolor="#9ffcab", label="optional_sequence"];
+    grouped_sequence0 [shape=box, style="filled", fillcolor="#9ffcab", label="grouped_sequence"];
+    disInput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    disOutput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    IDENTIFIER0 [shape=box, style="filled", fillcolor="#9ffcab", label="IDENTIFIER"];
+    disInput0 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    disOutput0 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    TERMINAL [shape=box, style="filled", fillcolor="#9ffcab", label="TERMINAL"];
+    disInput1 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    disOutput1 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    disInput->optional_sequence0;
+    disInput->grouped_sequence0;
+    optional_sequence0->disOutput;
+    grouped_sequence0->disOutput;
+    disInput0->disInput;
+    disInput0->IDENTIFIER0;
+    disOutput->disOutput0;
+    IDENTIFIER0->disOutput0;
+    disInput1->disInput0;
+    disInput1->TERMINAL;
+    disOutput0->disOutput1;
+    TERMINAL->disOutput1;
+    primary->disInput1;
+
+    // =====================
+    // factor
+    factor [shape=plaintext, style="", label="factor"];
+    primary0 [shape=box, style="filled", fillcolor="#9ffcab", label="primary"];
+    STAR_OP0 [shape=box, style="filled", fillcolor="#9ffcab", label="STAR_OP"];
+    PLUS_OP0 [shape=box, style="filled", fillcolor="#9ffcab", label="PLUS_OP"];
+    disInput2 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    disOutput2 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    optInput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    optOutput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    disInput2->STAR_OP0;
+    disInput2->PLUS_OP0;
+    STAR_OP0->disOutput2;
+    PLUS_OP0->disOutput2;
+    optInput->disInput2;
+    disOutput2->optOutput;
+    optInput->optOutput;
+    primary0->optInput;
+    factor->primary0;
+
+    // =====================
+    // term
+    term [shape=plaintext, style="", label="term"];
+    factor0 [shape=box, style="filled", fillcolor="#9ffcab", label="factor"];
+    plusInput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    plusOutput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    plusInput->factor0;
+    factor0->plusOutput;
+    plusOutput->plusInput;
+    term->plusInput;
+
+    // =====================
+    // expression
+    expression1 [shape=plaintext, style="", label="expression"];
+    term0 [shape=box, style="filled", fillcolor="#9ffcab", label="term"];
+    DIS_OP0 [shape=box, style="filled", fillcolor="#9ffcab", label="DIS_OP"];
+    term1 [shape=box, style="filled", fillcolor="#9ffcab", label="term"];
+    starInput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    starOutput [shape=circle, label="", style="filled", fillcolor="#808080"];
+    DIS_OP0->term1;
+    starInput->DIS_OP0;
+    term1->starOutput;
+    starOutput->starInput;
+    starInput->starOutput;
+    term0->starInput;
+    expression1->term0;
+
+    // =====================
+    // rule
+    rule [shape=plaintext, style="", label="rule"];
+    IDENTIFIER1 [shape=box, style="filled", fillcolor="#9ffcab", label="IDENTIFIER"];
+    RULE_OP0 [shape=box, style="filled", fillcolor="#9ffcab", label="RULE_OP"];
+    expression2 [shape=box, style="filled", fillcolor="#9ffcab", label="expression"];
+    NEWLINE0 [shape=box, style="filled", fillcolor="#9ffcab", label="NEWLINE"];
+    IDENTIFIER1->RULE_OP0;
+    RULE_OP0->expression2;
+    expression2->NEWLINE0;
+    rule->IDENTIFIER1;
+
+    // =====================
+    // grammar
+    grammar [shape=plaintext, style="", label="grammar"];
+    rule0 [shape=box, style="filled", fillcolor="#9ffcab", label="rule"];
+    starInput0 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    starOutput0 [shape=circle, label="", style="filled", fillcolor="#808080"];
+    starInput0->rule0;
+    rule0->starOutput0;
+    starOutput0->starInput0;
+    starInput0->starOutput0;
+    grammar->starInput0;
+
+    // =====================
+    // Legend
+    subgraph cluster_legend {
+        style="filled";
+        fillcolor="white";
+        color="black";
+        margin=20;
+
+        legend_title [shape=plaintext, label=<<U>Legend</U>>, fontsize=12];
+
+        TerminalDefinition [shape=box, style="rounded,filled", fillcolor="#9fc4fc", label="Terminal"];
+        NonTerminalDefinition [shape=box, style="filled", fillcolor="#9ffcab", label="Non-Terminal"];
+        RoutingNode [shape=circle, label="Routing node", style="filled", fillcolor="#808080"];
+
+        {rank=same; TerminalDefinition; NonTerminalDefinition; RoutingNode;}
+        legend_title -> TerminalDefinition [style=invis];
+    }
+}

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="EBNF-compiler:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/EBNF_compiler_jar</output-path>
+    <root id="archive" name="EBNF-compiler.jar">
+      <element id="module-output" name="EBNF-compiler" />
+    </root>
+  </artifact>
+</component>

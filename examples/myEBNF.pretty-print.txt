@@ -1,0 +1,18 @@
+<grammar>           ::= <rule>*
+<rule>              ::= <IDENTIFIER> <RULE_OP> <expression> <NEWLINE>
+<expression>        ::= <term> ( <DIS_OP> <term> )*
+<term>              ::= <factor>+
+<factor>            ::= <primary> [ <STAR_OP> | <PLUS_OP> ]
+<primary>           ::= <optional_sequence> | <grouped_sequence> | <IDENTIFIER> | <TERMINAL>
+<optional_sequence> ::= <L_SQ_BRACE_DEL> <expression> <R_SQ_BRACE_DEL>
+<grouped_sequence>  ::= <L_PAR_DEL> <expression> <R_PAR_DEL>
+<IDENTIFIER>        ::= "\\<[a-zA-Z_][a-zA-Z0-9_]*\\>"
+<RULE_OP>           ::= "::="
+<DIS_OP>            ::= "|"
+<STAR_OP>           ::= "*"
+<PLUS_OP>           ::= "+"
+<L_SQ_BRACE_DEL>    ::= "["
+<R_SQ_BRACE_DEL>    ::= "]"
+<L_PAR_DEL>         ::= "("
+<R_PAR_DEL>         ::= ")"
+<NEWLINE>           ::= "\\n"
