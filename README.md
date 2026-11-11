@@ -1,4 +1,4 @@
-# Grammar diagram generator
+# Syntax diagram generator
 
 Mon projet de compilateur permet de
 
