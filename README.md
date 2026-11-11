@@ -26,7 +26,7 @@ Nous utilisons la syntaxe EBNF suivante :
 | ---------------------- | ---------------------- | ---------------------------------------------------------------------- |
 | Identifiant            | <[a-zA-Z\_]+>          | Désigne un symbole non terminal.                                       |
 | Définition d'une règle | <...> ::= ... ;        | Définit un symbole non terminal.                                       |
-| Disjonction            | $a \char"007C b$       | Indique la présence de $a$ ou de $b$.                                  |
+| Disjonction            | $a \| b$               | Indique la présence de $a$ ou de $b$.                                  |
 | Conjonction            | $a\,\, b$              | Indique la présence de $a$ puis de $b$.                                |
 | Groupe                 | $(\dots)$              | Permet de grouper des opérations EBNF (Disjonction, conjonction, ...). |
 | Optionnalité           | $[a]$                  | La présence de $a$ est optionnelle.                                    |
@@ -40,21 +40,20 @@ PS : Nous utiliserons une syntaxe d'expressions régulières Java pour les symbo
 
 On en déduit les tokens suivants :
 
-| Nom            | Regex                                                                                 | Signification                                                |
-| -------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| NEWLINE        | $\texttt{;}$                                                                          | Fin de règle                                                 |
-| (WHITESPACE)   | $\texttt{[ \textbackslash t\textbackslash r\textbackslash n]+}$                       | Espace, **supprimé après le lexing**                         |
-| RULE_OP        | $\texttt{::=}$                                                                        | Définition d'une règle                                       |
-| IDENTIFIER     | $\texttt{<[a-zA-Z\_]+>}$                                                              | Identifiant EBNF                                             |
-| L_PAR_DEL      | $\texttt{\textbackslash (}$                                                           | Parenthèse gauche                                            |
-| R_PAR_DEL      | $\texttt{\textbackslash )}$                                                           | Parenthèse droite                                            |
-| L_SQ_BRACE_DEL | $\texttt{\textbackslash [}$                                                           | Crochet gauche, ouvre un contenu optionnel                   |
-| R_SQ_BRACE_DEL | $\texttt{\textbackslash ]}$                                                           | Crochet droit, ferme un contenu optionnel                    |
-| STAR_OP        | $\texttt{\textbackslash*}$                                                            | Étoile de Kleene                                             |
-| PLUS_OP        | $\texttt{\textbackslash+}$                                                            | Plus, contenu présent au moins une fois                      |
-| DIS_OP         | $\texttt{\textbackslash \char"007C}$                                                  | Barre oblique, disjonction                                   |
-| TERMINAL       | $\texttt{("\textbackslash [\char`\^"\textbackslash ]*") \char"007C ('[\char`\^']*')}$ | Symbole terminal, token désigné par son expression régulière |
-
+| Nom            | Regex                         | Signification                                                |
+| -------------- | ----------------------------- | ------------------------------------------------------------ |
+| NEWLINE        | `;`                           | Fin de règle                                                 |
+| (WHITESPACE)   | `[ \t\r\n]+`                  | Espace, **supprimé après le lexing**                         |
+| RULE_OP        | `::=`                         | Définition d'une règle                                       |
+| IDENTIFIER     | `<[a-zA-Z_]+>`                | Identifiant EBNF                                             |
+| L_PAR_DEL      | `\(`                          | Parenthèse gauche                                            |
+| R_PAR_DEL      | `\)`                          | Parenthèse droite                                            |
+| L_SQ_BRACE_DEL | `\[`                          | Crochet gauche, ouvre un contenu optionnel                   |
+| R_SQ_BRACE_DEL | `\]`                          | Crochet droit, ferme un contenu optionnel                    |
+| STAR_OP        | `\*`                          | Étoile de Kleene                                             |
+| PLUS_OP        | `\+`                          | Plus, contenu présent au moins une fois                      |
+| DIS_OP         | `\\|`                         | Barre oblique, disjonction                                   |
+| TERMINAL       | `("[^"]*")\|('[^']*')`        | Symbole terminal, token désigné par son expression régulière |
 ### Syntaxe concrète
 
 Voici la grammaire de l'EBNF considérée, exprimée elle même en EBNF. Les tokens sont en majuscules.
